@@ -24,15 +24,15 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0c0c0c;
-  --surface:#141414;
-  --surface-2:#1c1c1c;
-  --border:#2a2a2a;
-  --text:#e8e8e8;
-  --text-dim:#777;
-  --green:#00ff88;
-  --green-dim:#00ff8822;
-  --green-mid:#00ff8844;
+  --bg:#f5f5f0;
+  --surface:#ffffff;
+  --surface-2:#eeeee8;
+  --border:#d8d8d0;
+  --text:#1a1a1a;
+  --text-dim:#6b6b6b;
+  --green:#00994d;
+  --green-dim:#00994d15;
+  --green-mid:#00994d30;
   --mono:'Azeret Mono',monospace;
   --display:'Syne',sans-serif;
 }
@@ -55,7 +55,7 @@ body::before{
     linear-gradient(var(--border) 1px, transparent 1px),
     linear-gradient(90deg, var(--border) 1px, transparent 1px);
   background-size:60px 60px;
-  opacity:.15;
+  opacity:.25;
   pointer-events:none;
   z-index:0;
 }
@@ -63,7 +63,7 @@ body::before{
 /* ── NAV ── */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(12,12,12,.9);
+  background:rgba(245,245,240,.92);
   backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);
 }
@@ -77,7 +77,6 @@ nav{
 }
 .nav-logo img{
   height:28px;
-  filter:invert(1);
 }
 .nav-tag{
   font-size:.65rem;
@@ -169,7 +168,7 @@ nav{
   z-index:0;
 }
 .btn:hover::before{transform:translateY(0)}
-.btn:hover{color:var(--bg)}
+.btn:hover{color:#fff}
 .btn span{position:relative;z-index:1}
 
 .btn-ghost{
@@ -347,12 +346,118 @@ footer{
 footer a{color:var(--text-dim);text-decoration:none}
 footer a:hover{color:var(--green)}
 
+/* ── LANG TOGGLE ── */
+.lang-toggle{
+  font-family:var(--mono);
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.12em;
+  padding:.35rem .7rem;
+  background:transparent;
+  border:1px solid var(--green-mid);
+  color:var(--green);
+  cursor:pointer;
+  transition:all .25s;
+}
+.lang-toggle:hover{
+  background:var(--green);
+  color:#fff;
+}
+/* lang-toggle-mobile no longer needed - handled in mobile nav drawer */
+.lang-toggle-mobile{display:none!important}
+
+/* ── HAMBURGER ── */
+.hamburger{
+  display:none;
+  background:none;border:none;cursor:pointer;
+  padding:.5rem;
+  flex-direction:column;gap:5px;
+}
+.hamburger span{
+  display:block;width:22px;height:1.5px;
+  background:var(--text);
+  transition:all .3s;
+}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(4px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-5px)}
+
+/* ── MOBILE NAV DRAWER ── */
+.mobile-nav{
+  display:none;
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  z-index:99;
+  background:rgba(245,245,240,.97);
+  backdrop-filter:blur(20px);
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2rem;
+}
+.mobile-nav.open{display:flex}
+.mobile-nav a,.mobile-nav button{
+  font-family:var(--mono);
+  font-size:.9rem;
+  font-weight:400;
+  letter-spacing:.1em;
+  color:var(--text-dim);
+  text-decoration:none;
+  background:none;border:none;cursor:pointer;
+  transition:color .25s;
+}
+.mobile-nav a:hover,.mobile-nav button:hover{color:var(--green)}
+
 /* ── RESPONSIVE ── */
 @media(max-width:680px){
   .nav-links{display:none}
-  .hero{padding:8rem 1.5rem 5rem}
-  .about-grid{grid-template-columns:1fr;gap:2rem}
-  .section{padding:4rem 1.5rem}
+  .hamburger{display:flex}
+  .lang-toggle-mobile{display:block}
+
+  /* Hero */
+  .hero{padding:6.5rem 1.25rem 3.5rem}
+  .hero h1{font-size:clamp(2rem,8vw,2.6rem);line-height:1.12}
+  .hero-eyebrow{font-size:.6rem;margin-bottom:1rem}
+  .hero-sub{font-size:.8rem;line-height:1.75;margin-top:1.25rem}
+  .hero-cta{margin-top:1.75rem;flex-direction:column}
+  .hero-cta .btn{text-align:center;padding:.85rem 1.5rem}
+
+  /* Sections */
+  .section{padding:3rem 1.25rem}
+  .section-rule{padding:0 1.25rem}
+  .section-label{font-size:.6rem;margin-bottom:2rem}
+
+  /* Projects */
+  .projects-grid{grid-template-columns:1fr;gap:1rem}
+  .project-card{padding:1.5rem}
+  .project-card h3{font-size:1.05rem}
+  .project-card p{font-size:.78rem}
+  .project-tags{gap:.4rem}
+  .project-tags span{font-size:.55rem;padding:.25rem .55rem}
+
+  /* About */
+  .about-grid{grid-template-columns:1fr;gap:1.5rem}
+  .about-left h2{font-size:1.4rem}
+  .about-right p{font-size:.78rem;line-height:1.8;margin-bottom:1rem}
+  .parent-badge{font-size:.65rem;margin-top:1rem}
+
+  /* Contact */
+  .contact-grid{grid-template-columns:1fr;gap:1.5rem}
+  .contact-item h4{font-size:.58rem}
+  .contact-item p,.contact-item a{font-size:.82rem}
+
+  /* Footer */
+  footer{font-size:.65rem;padding:1.5rem 1.25rem}
+
+  /* Nav */
+  .nav-inner{padding:.85rem 1.25rem}
+  .nav-logo img{height:22px}
+  .nav-tag{font-size:.55rem;padding:.15rem .45rem}
+}
+
+@media(max-width:380px){
+  .hero h1{font-size:1.8rem}
+  .hero-sub{font-size:.75rem}
+  .project-card{padding:1.25rem}
 }
 
 /* ── ANIMATIONS ── */
@@ -393,32 +498,43 @@ footer a:hover{color:var(--green)}
       <span class="nav-tag">Lab</span>
     </div>
     <ul class="nav-links">
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
+      <li><a href="#about" data-i18n="nav_about">About</a></li>
+      <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+      <li><button class="lang-toggle" onclick="toggleLang()" aria-label="Toggle language">FR</button></li>
     </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
+<div class="mobile-nav" id="mobileNav">
+  <a href="#projects" onclick="closeMenu()" data-i18n="nav_projects">Projects</a>
+  <a href="#about" onclick="closeMenu()" data-i18n="nav_about">About</a>
+  <a href="#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
+  <button onclick="toggleLang();closeMenu()" class="lang-toggle" style="margin-top:1rem">FR</button>
+</div>
+
 <section class="hero">
-  <div class="hero-eyebrow slide d1">Digital Innovation Lab</div>
-  <h1 class="fade d2">Building tools for <span>resilient</span> communities</h1>
-  <p class="hero-sub fade d3">BOMALAB designs and builds AI-powered platforms, community tools, and digital infrastructure for organisations working across Africa and Europe.</p>
+  <div class="hero-eyebrow slide d1" data-i18n="hero_eyebrow">Digital Innovation Lab</div>
+  <h1 class="fade d2" data-i18n="hero_title" data-i18n-html="1">Building tools for <span>resilient</span> communities</h1>
+  <p class="hero-sub fade d3" data-i18n="hero_sub">BOMALAB designs and builds AI-powered platforms, community tools, and digital infrastructure for organisations working across Africa and Europe.</p>
   <div class="hero-cta fade d4">
-    <a href="#projects" class="btn"><span>View projects</span></a>
-    <a href="#contact" class="btn btn-ghost"><span>Get in touch</span></a>
+    <a href="#projects" class="btn"><span data-i18n="hero_cta1">View projects</span></a>
+    <a href="#contact" class="btn btn-ghost"><span data-i18n="hero_cta2">Get in touch</span></a>
   </div>
 </section>
 
 <div class="section-rule"><hr></div>
 
 <section class="section" id="projects">
-  <div class="section-label fade d1">Active Projects</div>
+  <div class="section-label fade d1" data-i18n="projects_label">Active Projects</div>
   <div class="projects-grid">
     <div class="project-card fade d2">
-      <div class="project-status">Live</div>
+      <div class="project-status" data-i18n="status_live">Live</div>
       <h3>#BuildingResilience</h3>
-      <p>Multilingual WhatsApp AI assistant and campaign website for community resilience initiatives. Powered by Claude API, Supabase, and Twilio.</p>
+      <p data-i18n="project1_desc">Multilingual WhatsApp AI assistant and campaign website for community resilience initiatives. Powered by Claude API, Supabase, and Twilio.</p>
       <div class="project-tags">
         <span>FastAPI</span>
         <span>Claude AI</span>
@@ -427,9 +543,9 @@ footer a:hover{color:var(--green)}
       </div>
     </div>
     <div class="project-card fade d3">
-      <div class="project-status">Live</div>
-      <h3>Community platforms</h3>
-      <p>Bilingual web platforms with real-time engagement, event integration, and accessible multilingual content delivery.</p>
+      <div class="project-status" data-i18n="status_live">Live</div>
+      <h3 data-i18n="project2_title">Community platforms</h3>
+      <p data-i18n="project2_desc">Bilingual web platforms with real-time engagement, event integration, and accessible multilingual content delivery.</p>
       <div class="project-tags">
         <span>Next.js</span>
         <span>FR/EN</span>
@@ -437,9 +553,9 @@ footer a:hover{color:var(--green)}
       </div>
     </div>
     <div class="project-card fade d4">
-      <div class="project-status">Live</div>
-      <h3>Messaging infrastructure</h3>
-      <p>Secure, scalable messaging systems using WhatsApp Business API for campaigns, events, and ongoing community management.</p>
+      <div class="project-status" data-i18n="status_live">Live</div>
+      <h3 data-i18n="project3_title">Messaging infrastructure</h3>
+      <p data-i18n="project3_desc">Secure, scalable messaging systems using WhatsApp Business API for campaigns, events, and ongoing community management.</p>
       <div class="project-tags">
         <span>Twilio</span>
         <span>Webhooks</span>
@@ -452,16 +568,16 @@ footer a:hover{color:var(--green)}
 <div class="section-rule"><hr></div>
 
 <section class="section" id="about">
-  <div class="section-label fade d1">About</div>
+  <div class="section-label fade d1" data-i18n="about_label">About</div>
   <div class="about-grid">
     <div class="about-left fade d2">
-      <h2>The lab arm of <span>Chomei Commerz</span></h2>
+      <h2 data-i18n="about_title" data-i18n-html="1">The lab arm of <span>Chomei Commerz</span></h2>
     </div>
     <div class="about-right fade d3">
-      <p><strong>BOMALAB</strong> is the digital innovation lab of Chomei Commerz Ltd. We focus on applied AI, community-facing platforms, and the technical infrastructure that powers them.</p>
-      <p>We work at the intersection of technology and social impact &mdash; building tools that are accessible, culturally sensitive, and built to last. From AI assistants that speak multiple languages to platforms that connect communities across borders.</p>
-      <p>Every project starts with the question: <strong>what does this community actually need?</strong></p>
-      <div class="parent-badge">
+      <p data-i18n="about_p1" data-i18n-html="1"><strong>BOMALAB</strong> is the digital innovation lab of Chomei Commerz Ltd. We focus on applied AI, community-facing platforms, and the technical infrastructure that powers them.</p>
+      <p data-i18n="about_p2">We work at the intersection of technology and social impact &mdash; building tools that are accessible, culturally sensitive, and built to last. From AI assistants that speak multiple languages to platforms that connect communities across borders.</p>
+      <p data-i18n="about_p3" data-i18n-html="1">Every project starts with the question: <strong>what does this community actually need?</strong></p>
+      <div class="parent-badge" data-i18n="about_badge" data-i18n-html="1">
         A subsidiary of <a href="/">Chomei Commerz Ltd</a>
       </div>
     </div>
@@ -471,19 +587,19 @@ footer a:hover{color:var(--green)}
 <div class="section-rule"><hr></div>
 
 <section class="section" id="contact">
-  <div class="section-label fade d1">Contact</div>
+  <div class="section-label fade d1" data-i18n="contact_label">Contact</div>
   <div class="contact-grid fade d2">
     <div class="contact-item">
-      <h4>Email</h4>
+      <h4 data-i18n="contact_email">Email</h4>
       <a href="mailto:info@chomei.store">info@chomei.store</a>
     </div>
     <div class="contact-item">
-      <h4>Web</h4>
+      <h4 data-i18n="contact_web">Web</h4>
       <a href="https://chomei.store">chomei.store</a>
     </div>
     <div class="contact-item">
-      <h4>Location</h4>
-      <p>United Kingdom</p>
+      <h4 data-i18n="contact_location">Location</h4>
+      <p data-i18n="contact_location_val">United Kingdom</p>
     </div>
   </div>
 </section>
@@ -491,8 +607,114 @@ footer a:hover{color:var(--green)}
 <div class="section-rule"><hr></div>
 
 <footer>
-  &copy; 2026 BOMALAB &mdash; A division of <a href="/">Chomei Commerz Ltd</a>
+  <span data-i18n="footer" data-i18n-html="1">&copy; 2026 BOMALAB &mdash; A division of <a href="/">Chomei Commerz Ltd</a></span>
 </footer>
+
+<button class="lang-toggle-mobile" onclick="toggleLang()">FR</button>
+
+<script>
+const translations = {
+  fr: {
+    nav_projects: 'Projets',
+    nav_about: '\u00C0 propos',
+    nav_contact: 'Contact',
+    hero_eyebrow: 'Laboratoire d\u2019innovation num\u00E9rique',
+    hero_title: 'Construire des outils pour des communaut\u00E9s <span>r\u00E9silientes</span>',
+    hero_sub: 'BOMALAB con\u00E7oit et d\u00E9veloppe des plateformes aliment\u00E9es par l\u2019IA, des outils communautaires et des infrastructures num\u00E9riques pour les organisations en Afrique et en Europe.',
+    hero_cta1: 'Voir les projets',
+    hero_cta2: 'Nous contacter',
+    projects_label: 'Projets actifs',
+    status_live: 'En ligne',
+    project1_desc: 'Assistant IA multilingue sur WhatsApp et site web de campagne pour les initiatives de r\u00E9silience communautaire. Propuls\u00E9 par Claude API, Supabase et Twilio.',
+    project2_title: 'Plateformes communautaires',
+    project2_desc: 'Plateformes web bilingues avec engagement en temps r\u00E9el, int\u00E9gration d\u2019\u00E9v\u00E9nements et diffusion de contenu multilingue accessible.',
+    project3_title: 'Infrastructure de messagerie',
+    project3_desc: 'Syst\u00E8mes de messagerie s\u00E9curis\u00E9s et \u00E9volutifs utilisant l\u2019API WhatsApp Business pour les campagnes, \u00E9v\u00E9nements et la gestion communautaire.',
+    about_label: '\u00C0 propos',
+    about_title: 'Le bras laboratoire de <span>Chomei Commerz</span>',
+    about_p1: '<strong>BOMALAB</strong> est le laboratoire d\u2019innovation num\u00E9rique de Chomei Commerz Ltd. Nous nous concentrons sur l\u2019IA appliqu\u00E9e, les plateformes communautaires et l\u2019infrastructure technique qui les alimente.',
+    about_p2: 'Nous travaillons \u00E0 l\u2019intersection de la technologie et de l\u2019impact social \u2014 en construisant des outils accessibles, culturellement sensibles et durables. Des assistants IA multilingues aux plateformes qui connectent les communaut\u00E9s au-del\u00E0 des fronti\u00E8res.',
+    about_p3: 'Chaque projet commence par la question\u00A0: <strong>de quoi cette communaut\u00E9 a-t-elle vraiment besoin\u00A0?</strong>',
+    about_badge: 'Une filiale de <a href="/">Chomei Commerz Ltd</a>',
+    contact_label: 'Contact',
+    contact_email: 'Email',
+    contact_web: 'Web',
+    contact_location: 'Lieu',
+    contact_location_val: 'Royaume-Uni',
+    footer: '&copy; 2026 BOMALAB &mdash; Une division de <a href="/">Chomei Commerz Ltd</a>'
+  },
+  en: {
+    nav_projects: 'Projects',
+    nav_about: 'About',
+    nav_contact: 'Contact',
+    hero_eyebrow: 'Digital Innovation Lab',
+    hero_title: 'Building tools for <span>resilient</span> communities',
+    hero_sub: 'BOMALAB designs and builds AI-powered platforms, community tools, and digital infrastructure for organisations working across Africa and Europe.',
+    hero_cta1: 'View projects',
+    hero_cta2: 'Get in touch',
+    projects_label: 'Active Projects',
+    status_live: 'Live',
+    project1_desc: 'Multilingual WhatsApp AI assistant and campaign website for community resilience initiatives. Powered by Claude API, Supabase, and Twilio.',
+    project2_title: 'Community platforms',
+    project2_desc: 'Bilingual web platforms with real-time engagement, event integration, and accessible multilingual content delivery.',
+    project3_title: 'Messaging infrastructure',
+    project3_desc: 'Secure, scalable messaging systems using WhatsApp Business API for campaigns, events, and ongoing community management.',
+    about_label: 'About',
+    about_title: 'The lab arm of <span>Chomei Commerz</span>',
+    about_p1: '<strong>BOMALAB</strong> is the digital innovation lab of Chomei Commerz Ltd. We focus on applied AI, community-facing platforms, and the technical infrastructure that powers them.',
+    about_p2: 'We work at the intersection of technology and social impact \u2014 building tools that are accessible, culturally sensitive, and built to last. From AI assistants that speak multiple languages to platforms that connect communities across borders.',
+    about_p3: 'Every project starts with the question: <strong>what does this community actually need?</strong>',
+    about_badge: 'A subsidiary of <a href="/">Chomei Commerz Ltd</a>',
+    contact_label: 'Contact',
+    contact_email: 'Email',
+    contact_web: 'Web',
+    contact_location: 'Location',
+    contact_location_val: 'United Kingdom',
+    footer: '&copy; 2026 BOMALAB &mdash; A division of <a href="/">Chomei Commerz Ltd</a>'
+  }
+};
+
+let currentLang = 'en';
+
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'fr' : 'en';
+  const nextLabel = currentLang === 'en' ? 'FR' : 'EN';
+
+  document.querySelectorAll('.lang-toggle, .lang-toggle-mobile').forEach(function(btn) {
+    btn.textContent = nextLabel;
+  });
+
+  document.documentElement.lang = currentLang === 'fr' ? 'fr' : 'en';
+
+  var t = translations[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) {
+      if (el.hasAttribute('data-i18n-html')) {
+        el.innerHTML = t[key];
+      } else {
+        el.textContent = t[key];
+      }
+    }
+  });
+}
+
+function toggleMenu() {
+  var nav = document.getElementById('mobileNav');
+  var btn = document.querySelector('.hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
+  document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMenu() {
+  var nav = document.getElementById('mobileNav');
+  var btn = document.querySelector('.hamburger');
+  nav.classList.remove('open');
+  btn.classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
 
 </body>
 </html>
